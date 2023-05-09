@@ -6,19 +6,16 @@ export class LogsMiddleware implements NestMiddleware {
   private readonly logger = new Logger('HTTP');
 
   use(request: Request, response: Response, next: NextFunction) {
-    const now = Date.now();
     response.on('finish', () => {
-      const { method, originalUrl, body, ip, params } = request;
+      const { method, headers, url, query } = request;
       const { statusCode, statusMessage } = response;
 
-      const bodyJson = JSON.stringify(body);
-      const paramsJson = JSON.stringify(params);
+      const requestMsg = JSON.stringify({
+        query,
+        headers,
+      });
 
-      const message = `${ip} [${method}] ${originalUrl} ${statusCode} +${
-        Date.now() - now
-      } ${statusMessage} ${paramsJson.length > 2 ? paramsJson : ''} ${
-        bodyJson.length > 2 ? bodyJson : ''
-      }`;
+      const message = `${method} ${url} ${statusCode} ${statusMessage} ${requestMsg}`;
 
       if (statusCode >= 500) {
         return this.logger.error(message);

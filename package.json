@@ -1,0 +1,20 @@
+{
+  "name": "cloud_store-archakov_course",
+  "version": "1.0.0",
+  "description": "",
+  "devDependencies": {},
+  "scripts": {
+    "start": "docker-compose down && docker-compose up --build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaksymMakiaveli/NestJS_React-Cloud_Store.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MaksymMakiaveli/NestJS_React-Cloud_Store/issues"
+  },
+  "homepage": "https://github.com/MaksymMakiaveli/NestJS_React-Cloud_Store#readme"
+}

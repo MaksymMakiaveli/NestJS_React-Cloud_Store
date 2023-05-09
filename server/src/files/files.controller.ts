@@ -3,7 +3,6 @@ import {
   Post,
   UseInterceptors,
   UploadedFile,
-  Logger,
   ParseFilePipe,
   MaxFileSizeValidator,
   Get,
@@ -11,14 +10,18 @@ import {
 import { FilesService } from './files.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { fileStorage } from './storage';
-import { ApiBody, ApiConsumes } from '@nestjs/swagger';
-import { MAX_FILE_SIZE } from '../constants';
+import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { MAX_FILE_SIZE } from '../common/constants';
+import { ApiOkGlobalResponse } from '../common/decorators';
+import { FileEntity } from './entities';
 
 @Controller('files')
+@ApiTags('files')
 export class FilesController {
   constructor(private readonly filesService: FilesService) {}
 
   @Get()
+  @ApiOkGlobalResponse(FileEntity, { type: 'array' })
   findAll() {
     return this.filesService.findAll();
   }
@@ -30,6 +33,7 @@ export class FilesController {
     }),
   )
   @ApiConsumes('multipart/form-data')
+  @ApiOkGlobalResponse(FileEntity)
   @ApiBody({
     schema: {
       type: 'object',

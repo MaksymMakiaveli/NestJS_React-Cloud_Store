@@ -23,7 +23,7 @@ services:
     volumes:
       - ./server/uploads:/usr/src/app/uploads
       - ./server/src:/usr/src/app/src
-      - ./server/node_modules:/usr/src/app/node_modules
+      - /usr/src/app/node_modules
     ports:
       - ${API_PORT}:3001
     depends_on:
@@ -39,6 +39,7 @@ services:
       - TYPEORM_DATABASE=${TYPEORM_DATABASE}
       - TYPEORM_PORT=${TYPEORM_PORT}
       - TYPEORM_HOST=db
+      - SECRET_KEY=${SECRET_KEY}
     restart: unless-stopped
 networks:
   cloud_storage:

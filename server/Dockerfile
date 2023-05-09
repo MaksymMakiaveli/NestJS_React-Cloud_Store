@@ -1,11 +1,11 @@
-FROM node:14-alpine AS builder
+FROM node:16 AS builder
 WORKDIR /usr/src/app
 COPY package*.json ./
 RUN yarn install
 COPY . .
 RUN yarn build
 
-FROM node:14-alpine
+FROM node:16
 WORKDIR /usr/src/app
 COPY --from=builder /usr/src/app ./
 EXPOSE 3001

@@ -13,15 +13,31 @@ export class UsersService {
     private userRepository: Repository<UserEntity>,
   ) {}
 
-  findByEmail(email: string) {
+  async findAll() {
+    const users = await this.userRepository.find();
+
+    return users;
+  }
+
+  async findByEmail(email: string) {
     return this.userRepository.findOneBy({ email });
   }
 
-  findById(id: number) {
+  async findById(id: number) {
     return this.userRepository.findOneBy({ id });
   }
 
-  create(dto: CreateUserDto) {
-    console.log('hi');
+  async create(dto: CreateUserDto) {
+    this.logger.log('Start user creating');
+
+    const { password, ...restDto } = dto;
+    const newUser = this.userRepository.create({ hash: password, ...restDto });
+    const user = await this.userRepository.save({
+      ...newUser,
+    });
+
+    this.logger.log(`User created: ${JSON.stringify(user)}`);
+
+    return user;
   }
 }

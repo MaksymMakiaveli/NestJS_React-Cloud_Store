@@ -18,7 +18,7 @@ export class SignUpDto {
 
   @IsNotEmpty()
   @IsString()
-  @Length(7, 30, { message: 'Password has to be between 7 and 30 chars' })
+  @Length(7, 30, { message: 'password has to be between 7 and 30 chars' })
   @ApiProperty({ nullable: false, minLength: 7, maxLength: 30 })
   password: string;
 }
